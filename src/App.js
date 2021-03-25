@@ -1,22 +1,45 @@
+import React, { Component } from 'react';
 
+class Button extends Component {
+   constructor(props){
+      super(props);
+      this.state = {
+         activated: false,
+      }
+      this.handleAtiveChange = this.handleAtiveChange.bind(this);  // binding de la función handleAcgtiveChange
+   }
 
-function Box(props){
-   return (
-      <div>
-         <h1>This is a stateless functional component</h1>
-         <h1>{props.text}</h1>
-         <h2>{props.subtitle}</h2>
-      </div>
-    );
+   handleAtiveChange(){
+      // this.setState({activated: !this.state.activated})
+      this.setState((prevState) => {
+         return{
+            activated: !prevState.activated
+         }
+      }
+      )
+   }
+
+   render(){
+      const buttonText = this.state.activated ? this.props.activeText: this.props.inactiveText;
+      return(
+         <button onClick={this.handleAtiveChange}>
+            {buttonText}
+         </button>
+      )
+   }
 }
 
-function App() {
-  return (
-      <Box 
-         text="hi, Jose"
-         subtitle="I hate this shit"
-      />
-  );
+
+class  App extends Component {
+
+   render(){
+      return(
+         <Button 
+         activeText="on"
+         inactiveText="off"
+         />
+      )
+   }
 }
 
 export default App;
