@@ -1,8 +1,17 @@
 
 
+function Box(props){
+   return (
+      <div>
+         <h1>This is a stateless functional component</h1>
+         <h1>{props.text}</h1>
+      </div>
+    );
+}
+
 function App() {
   return (
-    <h1>Welcom to the course!</h1>
+     <Box text="hi, Jose"/>
   );
 }
 
