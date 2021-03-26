@@ -3,18 +3,19 @@ import React, {useState, useEffect} from 'react'
 
 function Counter(){
    const [counter, setCounter] = useState(0);
+   const [color, setColor] = useState('salmon');
    const sumOnClick = () => setCounter(counter + 1);
    const substractOnClick = () => setCounter(counter - 1);
    const resetOnClick = () => setCounter(0);
+   const togglecolor = () => (color === 'salmon') ? setColor('green') : setColor('salmon') ;
 
    useEffect(
       () => {
-            console.log(`Im inside useeffect current, Im only run when component is mounted. Count is ${counter}`);
+            console.log(`Im inside useeffect current. Count is ${counter}`);
 
-            return  () => console.log(`Im removing anything that was setup above, Im only run when the component
-            is unmonted. The last count was ${counter}`);
+            return  () => console.log(`Im removing anything that was setup above. The last count was ${counter}`);
          },
-      []
+      [color]
       );
 
    return( 
@@ -28,7 +29,10 @@ function Counter(){
          <button onClick={resetOnClick}> 
             reset
          </button>  
-         <h1>
+         <button onClick={togglecolor}> 
+            change color
+         </button>  
+         <h1 style={{color}} >
             { counter }
          </h1>
       </div>
