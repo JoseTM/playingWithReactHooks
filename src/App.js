@@ -1,14 +1,18 @@
 import React, {useState, useEffect} from 'react'
 
-function App(){
-   
+
+function Counter(){
    const [counter, setCounter] = useState(0);
    const sumOnClick = () => setCounter(counter + 1);
    const substractOnClick = () => setCounter(counter - 1);
    const resetOnClick = () => setCounter(0);
 
    useEffect(
-      () => console.log(`im inside useeffect current count is ${counter}`)
+      () => {
+            console.log(`Im inside useeffect current count is ${counter}`);
+
+            return  () => console.log(`Im removing anything that was setup obove the last count was ${counter}`);
+         }
       );
 
    return( 
@@ -27,6 +31,16 @@ function App(){
          </h1>
       </div>
       );
+}
+
+
+function App(){
+   
+   return (
+      <div>
+         <Counter />
+      </div>
+   );
 }
 
 export default App;
