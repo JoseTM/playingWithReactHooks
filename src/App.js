@@ -35,10 +35,13 @@ function Counter(){
 
 
 function App(){
-   
+   const [visible, setVisible] = useState(false);
+   const toggleComponentVisibility = () => setVisible(!visible);
+
    return (
       <div>
-         <Counter />
+         <button onClick={toggleComponentVisibility} >hide/show counter component</button>
+         {visible && <Counter />}         
       </div>
    );
 }
