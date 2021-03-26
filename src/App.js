@@ -9,10 +9,12 @@ function Counter(){
 
    useEffect(
       () => {
-            console.log(`Im inside useeffect current count is ${counter}`);
+            console.log(`Im inside useeffect current, Im only run when component is mounted. Count is ${counter}`);
 
-            return  () => console.log(`Im removing anything that was setup obove the last count was ${counter}`);
-         }
+            return  () => console.log(`Im removing anything that was setup above, Im only run when the component
+            is unmonted. The last count was ${counter}`);
+         },
+      []
       );
 
    return( 
