@@ -1,35 +1,57 @@
-import React, {useState} from 'react'
+import React, {Component} from 'react'
 
-function App(){
-   const [city, setCity] = useState('')
-   const [country, setCountry] = useState('');
+class Counter extends Component{
+   constructor(props){
+      super(props);
+      this.state = {
+         count:  0,
+      };
+   };
 
-   const handleCityChange = (event) =>  setCity(event.target.value);   
-   const handleCountryChange = (event) => setCountry(event.target.value);
-   
-   return( 
-      <form>
+   componentDidMount(){
+      console.log("Im mounted, Im run just one time after first rendering");
+   }
+
+   componentDidUpdate(prevProps, prevState){
+      console.log("Im updated, Im run after any update of props "+prevState.count);
+   }
+
+   componentWillUnmount(){
+      console.log("Im been umounted, Im run just before component disapear from DOM")
+   }
+
+   render(){
+      console.log("im rendering");
+      const {count} = this.state;
+      return(
          <div>
-            <input 
-               type="text" 
-               placeholder="City" 
-               value={ city }
-               onChange={ handleCityChange }
-            />
+            <button onClick={() => this.setState({count: count + 1})}>increase</button>
+            <button onClick={() => this.setState({count: count - 1})}>decrease</button>
+            <h1>{count}</h1>
          </div>
+      );
+   }
+}
+
+class App extends Component {
+   constructor(props){
+      super(props);
+      this.state={
+         visible: false,
+      }
+   };
+
+   render(){
+      const { visible } = this.state;
+      return(
          <div>
-            <input
-               type="text" 
-               placeholder="Country" 
-               value={ country }
-               onChange={ handleCountryChange }
-            />
+            <button onClick={() =>this.setState({visible: !visible})}>
+               show/hide the counter component
+            </button>
+            { visible && <Counter/>}
          </div>
-         <div>
-            You live in { `${city},  ${country}` }
-         </div>
-      </form>
-   );
+      );
+   }
 }
 
 export default App;
