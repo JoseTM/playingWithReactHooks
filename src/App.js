@@ -2,15 +2,18 @@ import React, {useState} from 'react'
 
 function App(){
 
-   const [activated, setActivated] = useState(false)
-   const buttonText = activated ? 'Active':'Inactive';
+   const [counter, setCounter] = useState(0)
+   const handleClick = () => setCounter(counter + 1);
 
-   const onClick = () => setActivated(!activated);
-
-   return(  
-      <button onClick={onClick}> 
-         { buttonText }
-      </button>
+   return( 
+      <div>
+         <button onClick={handleClick}> 
+            +1
+         </button>         
+         <h1>
+            { counter }
+         </h1>
+      </div> 
    );
 }
 
