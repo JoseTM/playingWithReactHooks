@@ -13,7 +13,7 @@ function PersonalInfo(){
    const {value: surname , onChange: setSurname} = useInput();
    const {value: age , onChange: setAge} = useInput();
    
-
+   
    return (
       <div>
          <form>
