@@ -1,67 +1,52 @@
 
 import React, {useState} from 'react'
 
-function useCounter(initialValue = 0, stepValue = 1) {
-   const [counter, setCounter] = useState(initialValue);
-   const sumOnClick = () => setCounter(counter + stepValue);
-   const substractOnClick = () => setCounter(counter - stepValue);
-   const resetOnClick = () => setCounter(initialValue);
+function useInput(initialValue = '') {
+   const [value, setValue ] = useState(initialValue);
+   const onChange = (event) => setValue(event.target.value);
 
-   return {counter, sumOnClick, substractOnClick, resetOnClick};
+   return {value, onChange}
 }
 
-function Display(props) {
-   const {counter, sumOnClick, substractOnClick, resetOnClick} = useCounter(props.start, props.step);
+function PersonalInfo(){
+   const {value: name, onChange: setName} = useInput();
+   const {value: surname , onChange: setSurname} = useInput();
+   const {value: age , onChange: setAge} = useInput();
    
+
    return (
-      <div id="display">
-         <button onClick={sumOnClick}> 
-            increase
-         </button>
-         <button onClick={substractOnClick}> 
-            decrease
-         </button>  
-         <button onClick={resetOnClick}> 
-            reset
-         </button>  
-         <h1>
-            { counter }
-         </h1>
-      </div> 
+      <div>
+         <form>
+            <input 
+               type="text"
+               placeholder="Name"
+               name="name"
+               { ...useInput() }
+            />
+         <input 
+               type="text"
+               placeholder="Surname"
+               value={surname}
+               onChange={setSurname}
+            />
+
+            <input 
+               type="number"
+               placeholder="Age"
+               value={age}
+               onChange={setAge}
+            />                    
+         </form>
+
+         <div>{`${name} ${surname}`} has {age} years old</div>
+      </div>
+
    );
 }
-
-function FuncyDisplay(props) {
-   const {counter, sumOnClick, substractOnClick, resetOnClick} = useCounter(props.start, props.step);
-   
-   return (
-      <section id="funcyDisplay">
-         <button onClick={sumOnClick}> 
-            increase
-         </button>
-         <button onClick={substractOnClick}> 
-            decrease
-         </button>  
-         <button onClick={resetOnClick}> 
-            reset
-         </button>  
-         <h1>
-            { counter }
-         </h1>
-      </section> 
-   );
-}
-
 
 function App() {
-   
-   return( 
-      <div>
-         <Display start={10}/>
-         <Display start={20} step={4}/>
-         <Display />
-         <FuncyDisplay start={50}/>
-      </div>
+   return(
+      <PersonalInfo />
    );
 }
 
