@@ -1,32 +1,56 @@
-import React, {useState, useEffect} from 'react'
+import React, {createContext} from 'react'
 
 
-function App() {
-   const [userText, setUserText] = useState('')
-   
-   const handleUserKeyPress = (event) => {
-      const { key, keyCode } = event;
-      if ( keyCode === 32 || (keyCode >= 65 && keyCode <=90) ){
-         setUserText(`${userText}${key}`);
-      }
-      console.log(keyCode);
+const NameContext = createContext();
+
+
+class Child extends  React.Component {
+   render(){
+      return (
+         <section className="child">            
+               <GrandChild />            
+         </section>
+      );
    };
+}
+class GrandChild extends  React.Component {
+   render(){
+      return (
+         <div className="grandchild">
+            <Button />
+         </div>
+      );
+   };
+}
+class Button extends  React.Component {
+   render(){
+      return (
+         <NameContext.Consumer>
+           {
+              valorDeContexto =><button>{valorDeContexto}</button>
+           }    
+         </NameContext.Consumer>         
+      );
+   };
+}
 
-   useEffect(
-      () => {
-         window.addEventListener('keydown', handleUserKeyPress);
-         return () => window.removeEventListener('keydown', handleUserKeyPress);
-      });
+class App extends  React.Component {
+   constructor(props){
+      super(props);
+      this.state ={
+         valorDeEstado: 'Billy Shakespeare',
+      }
+   }
 
-
-   return (
-      <div>
-         <h1>Feel free to type!</h1>
-         <blockquote>
-            { userText }
-         </blockquote>
-      </div>
-   );
+   render(){
+      return (
+         <div>
+            <NameContext.Provider value={this.state.valorDeEstado}>
+               <Child />
+            </NameContext.Provider>
+         </div>
+      );
+   };
 }
 
 export default App;
