@@ -1,40 +1,36 @@
-import React, {createContext, useState, useContext} from 'react'
+import React, {useState, useEffect} from 'react'
 
 
-const NameContext = createContext();
 
-
-function Child() {
-   return (
-      <section className="child">            
-            <GrandChild />            
-      </section>
-   );
+function useKeyPress(startingValue){
+   const [userText, setUserText] = useState(startingValue);
    
-}
-function GrandChild(){
-   return (
-      <div className="grandchild">
-         <Button />
-      </div>
-   );
-}
+   const handleUserKeyPress = (event) => {
+      const { key, keyCode } = event;
+      if ( keyCode === 32 || (keyCode >= 65 && keyCode <=90) ){
+         setUserText(`${userText}${key}`);
+      }
+      console.log(keyCode);
+   };
 
-function Button() {
-   const name = useContext(NameContext);
-   return (
-      <button>{name}</button>
-   );
+   useEffect(
+      () => {
+         window.addEventListener('keydown', handleUserKeyPress);
+         return () => window.removeEventListener('keydown', handleUserKeyPress);
+      });
+   return userText;
 }
 
 function App() {
-   const [name, SetName] = useState('Billy Shakespeare');
+   
+   const userText = useKeyPress('En un lugar de la mancha ');
 
    return (
       <div>
-         <NameContext.Provider value={name}>
-            <Child />
-         </NameContext.Provider>
+         <h1>Feel free to type!</h1>
+         <blockquote>
+            { userText }
+         </blockquote>
       </div>
    );
 }
